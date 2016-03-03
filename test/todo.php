@@ -1,7 +1,8 @@
-<?php
+<?php defined('ALT_PATH') or die('No direct script access.');
 
 class TodoTest extends Alt_Test
 {
+    public $url = "http://localhost/academy-altphp-intro/";
     public $route = 'todo/';
 
     public function testCrud() {
