@@ -346,9 +346,12 @@ class Alt_Dbo {
         $fields = $this->get_fields(false);
 
         // add entry time and entry user if exist
-        $userdata = System_Auth::get_user_data();
+
         if($fields['entrytime'] !== null)   $data['entrytime'] = $data['entrytime'] != '' ? $data['entrytime'] : time();
-        if($fields['entryuser'] !== null)   $data['entryuser'] = $data['entryuser'] != '' ? $data['entryuser'] : $userdata['username'];
+        if($fields['entryuser'] !== null){
+            $userdata = System_Auth::get_user_data();
+            $data['entryuser'] = $data['entryuser'] != '' ? $data['entryuser'] : $userdata['username'];
+        }
 
         // set fields and values to insert
         $fnames = array();
@@ -432,9 +435,11 @@ class Alt_Dbo {
         $table_fields = $this->get_fields(false);
 
         // add modified time and modified user if exist
-        $userdata = System_Auth::get_user_data();
         if($table_fields['modifiedtime'] !== null)   $data['modifiedtime'] = $data['modifiedtime'] != '' ? $data['modifiedtime'] : time();
-        if($table_fields['modifieduser'] !== null)   $data['modifieduser'] = $data['modifieduser'] != '' ? $data['modifieduser'] : $userdata['username'];
+        if($table_fields['modifieduser'] !== null){
+            $userdata = System_Auth::get_user_data();
+            $data['modifieduser'] = $data['modifieduser'] != '' ? $data['modifieduser'] : $userdata['username'];
+        }
 
         // set fields and values to update
         $fields = array();
@@ -485,9 +490,11 @@ class Alt_Dbo {
         // add modified time and modified user if exist
         $fields = $this->get_fields(false);
         if($fields['isdeleted'] !== null){
-            $userdata = System_Auth::get_user_data();
             if($fields['deletedtime'] !== null)    $data['deletedtime'] = $data['deletedtime'] != '' ? $data['deletedtime'] : time();
-            if($fields['deleteduser'] !== null)    $data['deleteduser'] = $data['deleteduser'] != '' ? $data['deleteduser'] : $userdata['username'];
+            if($fields['modifieduser'] !== null){
+                $userdata = System_Auth::get_user_data();
+                $data['deleteduser'] = $data['deleteduser'] != '' ? $data['deleteduser'] : $userdata['username'];
+            }
             if($fields['isdeleted'] !== null)       $data['isdeleted'] = 1;
 
             return $this->update($data, $returnsql);
